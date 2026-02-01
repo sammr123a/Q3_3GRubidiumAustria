@@ -35,6 +35,38 @@
         return confirm("Are you sure you want to reset all information?");
     }
 
+    function saveFormdata(event) {
+        event.preventDefault();
+        if (!confirmSubmit()) {
+            return;
+        }
+
+        let singleFormData = {
+            studentID: document.querySelector('input[name="studentID"]').value,
+            fullName: document.querySelector('input[name="fullName"]').value,
+            birthday: document.querySelector('input[name="birthday"]').value,
+            email: document.querySelector('input[name="email"]').value,
+            mobilePhone: document.querySelector('input[name="mobilePhone"]').value,
+            gradeLevel: document.querySelector('select[name="gradeLevel"]').value,
+            position: document.querySelector('input[name="position"]:checked').value,
+            organization: document.querySelector('select[name="organization"]').value,
+            reason: document.querySelector('textarea[name="reason"]').value
+        }
+
+        let allFormData = JSON.parse(localStorage.getItem("allformData"));
+        if (!allFormData) {
+            allFormData = [];
+        }
+        allFormData.push(singleFormData);
+        localStorage.setItem("allformData", JSON.stringify(allFormData));
+        alert("Form data saved!");
+        document.getElementById("signupForm").reset()
+
+    }
+
+    function goToView() {
+            window.location.href = "viewSignUps.html";
+        }
 </script>
 
 <body>
@@ -107,6 +139,7 @@
         <div class="buttons">
         <button type="submit">Submit</button>
         <button type="reset">Reset</button>
+         <button type="button" onclick="goToView()">View Signups</button>
         </div>
     </form>
 </body>
