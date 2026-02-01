@@ -3,20 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sammr's Portfolio !!</title>
-
+    <meta name="author" content="Rb01 | Samantha Therese K. Austria">
+    <meta name="description"  content="3rd quarter 2nd graded exercise ">
+    <title>HTML forms - Sam Austria | Rb01 </title>
+    
 
 </head>
-<body> 
-    <h1>My Portfolio ⋆˚꩜｡</h1>
-    <h2>Click the links below to view my works!!</h2>
-  <h2>3rd Quarter</h2>
-    <nav>
-      <ul>
-        <li><a href="/public/Q3_3GRubidiumAustria.html">3rd Graded Exercise</a></li>
-      </ul>
-    </nav>
 
+<style>
+    fieldset {
+        margin-bottom: 15px;
+        padding: 10px;
+        border: 2px solid #000;
+    }
+    legend {
+        font-weight: bold;
+        padding: 0 10px;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+</style>
 
+<script>
+   function confirmSubmit() {
+        return confirm("Are you sure you want to submit this form?");
+    }
+
+    function confirmReset() {
+        return confirm("Are you sure you want to reset all information?");
+    }
+
+    function saveFormdata(event) {
+        event.preventDefault();
+        if (!confirmSubmit()) {
+            return;
+        }
+
+        let singleFormData = {
+            studentID: document.querySelector('input[name="studentID"]').value,
+            fullName: document.querySelector('input[name="fullName"]').value,
+            birthday: document.querySelector('input[name="birthday"]').value,
+            email: document.querySelector('input[name="email"]').value,
+            mobilePhone: document.querySelector('input[name="mobilePhone"]').value,
+            gradeLevel: document.querySelector('select[name="gradeLevel"]').value,
+            position: document.querySelector('input[name="position"]:checked').value,
+            organization: document.querySelector('select[name="organization"]').value,
+            reason: document.querySelector('textarea[name="reason"]').value
+        }
+
+        let allFormData = JSON.parse(localStorage.getItem("allformData"));
+        if (!allFormData) {
+            allFormData = [];
+        }
+        allFormData.push(singleFormData);
+        localStorage.setItem("allformData", JSON.stringify(allFormData));
+        alert("Form data saved!");
+        document.getElementById("signupForm").reset()
+
+    }
+
+    function goToView() {
+            window.location.href = "viewSignUps.html";
+        }
+</script>
+
+<body>
+    <form method="post"
+      onsubmit="return confirmSubmit()"
+      onreset="return confirmReset()">
+
+        <fieldset>
+            <legend>Your Information</legend>
+                <label>
+                    Student ID:
+                    <input type="number" name="studentID" required>
+                </label>
+                <label>
+                    Full Name:
+                    <input type="text" name="fullName" required>
+                </label>
+                <label>
+                    Birthday:
+                    <input type="date" name="birthday" required>
+                </label>
+                <label>
+                    Email Address:
+                    <input type="email" name="email" required>
+                </label>
+                <label>
+                    Mobile Phone:
+                    <input type="text" name="mobilePhone" required> 
+                </label>
+        </fieldset>
+        <fieldset>
+            <legend>Details</legend>
+                <label>
+                    Grade Level:
+                    <select name="gradeLevel" required>
+                        <option value="" disabled selected>Select your grade level</option>
+                        <option value="grade7">Grade 7</option>
+                        <option value="grade8">Grade 8</option>
+                        <option value="grade9">Grade 9</option>
+                        <option value="grade10">Grade 10</option>
+                        <option value="grade11">Grade 11</option>
+                        <option value="grade12">Grade 12</option>
+                    </select>
+                </label>
+                <div class="radio"> 
+                <label>
+                    Intern / Extern:
+                    <input type="radio" name="position" value="intern" required> Intern
+                    <input type="radio" name="position" value="extern" required> Extern
+                </label>
+                </div>
+                <label>
+                    Preferred Organization / Club:
+                    <select name="organization" required>
+                        <option value="" disabled selected>Select an organization/club</option>
+                        <option value="scienceClub">Aksis</option>
+                        <option value="mathClub">Math Club</option>
+                        <option value="artClub">Munhwa</option>
+                        <option value="sportsClub">Alianti</option>
+                        <option value="musicClub">Himig Agham</option>
+                    </select>
+                </label>
+                <label>
+                    Why do you want to join:
+                    <textarea name="reason" rows="4" cols="60" required></textarea>
+                </label>
+                
+        </fieldset>
+
+        <div class="buttons">
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+         <button type="button" onclick="goToView()">View Signups</button>
+        </div>
+    </form>
 </body>
-</html>
